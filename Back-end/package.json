@@ -23,6 +23,8 @@
   "dependencies": {
     "@adonisjs/core": "^5.9.0",
     "@adonisjs/repl": "^3.1.11",
+    "eslint": "^9.23.0",
+    "prettier": "^3.5.3",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.2.2",
     "source-map-support": "^0.5.21"
