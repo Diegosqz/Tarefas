@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+////*<TheWelcome />*/import TheWelcome from '../components/TheWelcome.vue'
+import Login from '@/views/Login.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+
+    <Login/>
+
   </main>
 </template>
 
