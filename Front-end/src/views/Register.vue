@@ -33,13 +33,15 @@
           lazy-rules
           :rules="[val => !!val || 'Senha é obrigatória']"
           class="q-mt-md"
+
         />
       </q-card-section>
       <q-card-actions align="right">
         <q-btn label="Registro" color="primary" @click="handleRegister" />
       </q-card-actions>
       <q-card-section class="text-center">
-        <q-btn flat label="Você já possui conta? Se sim, clique aqui" @click="goToLogin" />
+        <q-btn flat label="Você já possui conta? Se sim, clique aqui" :to="{name:'login'}"
+        />
       </q-card-section>
     </q-card>
   </div>
@@ -57,7 +59,7 @@ const password = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
 
-async function handleRegister() {
+ async function handleRegister() {
   try {
     const response = await axios.post('http://localhost:5173/register', {
       name: name.value,
@@ -66,7 +68,7 @@ async function handleRegister() {
     })
 
     const token = response.data.token
-    authStore.setToken(token)
+    await authStore.setToken(token)
     router.push('/')  // Navega para a página principal ou dashboard
   } catch (error) {
     console.error('Erro no registro, entre em contato com o suporte', error)
