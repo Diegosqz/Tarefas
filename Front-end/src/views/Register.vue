@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-center">
+  <q-page class="flex flex-center">
     <q-card class="q-pa-md" style="min-width: 350px; width: 100%;">
       <q-card-section>
         <div class="text-h6">Registro</div>
@@ -44,10 +44,10 @@
         />
       </q-card-section>
     </q-card>
-  </div>
+  </q-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
@@ -55,7 +55,7 @@ import { useAuthStore } from '@/stores/auth'
 
 const name = ref('')
 const email = ref('')
-const password = ref('')
+const password = ref<string>('')
 const router = useRouter()
 const authStore = useAuthStore()
 

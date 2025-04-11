@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; width: 100%;">
+  <q-page class="q-pa-md" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; width: 100%;">
     <q-card class="q-pa-md bg-transparent" style="min-width: 350px; width: 100%;">
       <q-card-section>
         <div class="text-h6">Login</div>
@@ -25,13 +25,13 @@
         />
       </q-card-section>
       <q-card-actions align="center">
-        <q-btn label="Login" color="primary" @click="handleLogin" align="center" />
+        <q-btn label="Login" color="primary" :to="{name:'dashboard'}" align="center"/>        <!-- @click="handleLogin" align="center" -->
       </q-card-actions>
       <q-card-section class="text-center">
         <q-btn flat label="Registrar" :to="{name: 'register'}"/>
       </q-card-section>
     </q-card>
-  </div>
+  </q-page>
 </template>
 
 <script setup>

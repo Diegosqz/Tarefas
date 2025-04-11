@@ -14,8 +14,11 @@ import axios from 'axios'
 const app = createApp(App)
 
 app.use(createPinia()) // Usando o Pinia
+
 app.use(router) // Usando o roteador
+
 app.use(VueAxios,axios) // Usando o VueAxios com axios
+
 app.use(Quasar, { // Usando o Quasar e seus plugins
   plugins: {
     Dialog,
