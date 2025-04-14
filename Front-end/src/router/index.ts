@@ -28,8 +28,6 @@ const router = createRouter({
       ]
     },
 
-
-
     {
       path: '/auth',
       component: GuestLayout,

@@ -3,8 +3,6 @@
 
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-
         <q-toolbar-title>
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
@@ -14,9 +12,27 @@
       </q-toolbar>
     </q-header>
 
-    <!-- Sidebar à esquerda -->
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered :width="200" :breakpoint="200">
+    <!-- Botão para reabrir o menu -->
+    <q-btn icon="chevron_right" round class="position-absolute q-ma-sm" style="margin-top: 60px;" flat v-if="!leftDrawerOpen"  @click="toggleLeftDrawer">
+    </q-btn>
+
+    <q-drawer behavior="default" show-if-above v-model="leftDrawerOpen" side="left" bordered :width="200"
+      :breakpoint="200">
       <q-list>
+        <!-- Botão dentro do drawer para ocultar -->
+        <q-item clickable @click="toggleLeftDrawer">
+          <q-item-section avatar>
+            <q-icon name="menu" />
+          </q-item-section>
+          <q-item-section>Menu</q-item-section>
+          <q-item-section side>
+            <q-icon name="chevron_left" />
+          </q-item-section>
+        </q-item>
+
+        <q-separator />
+
+        <!-- Itens de navegação -->
         <q-item clickable v-close-popup>
           <q-item-section avatar>
             <q-icon name="home" />
