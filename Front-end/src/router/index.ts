@@ -57,6 +57,11 @@ const router = createRouter({
           name:'calendar',
           component:() =>('../views/Calendar.vue'),
         },
+        {
+          path:'dialognewtask',
+          name: 'dialognewtask',
+          component:() => ('../components/tasks/DialogNewTask.vue'),
+        },
 
       ]
     },

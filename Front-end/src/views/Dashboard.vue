@@ -299,7 +299,7 @@ const showDialog = (taskStatus: string) => {
     // }
     component: '',
     componentProps: {
-      taskStatus
+      modelValue: true
     }
   })
 }
