@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue'
 import GuestLayout from '@/layouts/GuestLayout.vue'
 
@@ -10,21 +9,55 @@ const router = createRouter({
       path: '/',
       component: AuthenticatedLayout,
       children: [
+
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('../views/Login.vue'),
+        },
+
+        {
+          path: 'home',
+          name: 'home',
+          component: () => import('../views/HomeView.vue'),
+        },
         {
           path: 'dashboard',
           name: 'dashboard',
           component: () => import('../views/Dashboard.vue'),
         },
         {
-          path: 'login',
-          name: 'login',
-          component: () => import('../views/Login.vue'),
+          path: 'tasks',
+          name: 'tasks',
+          component: () => import ('../views/Tasks.vue'),
         },
         {
-          path: 'home',
-          name: 'home',
-          component: () => import('../views/HomeView.vue'),
-        }
+          path: 'notifications',
+          name:'notifications',
+          component: () => import('../views/Notifications.vue'),
+        },
+
+        {
+          path: 'logout',
+          name: 'logout',
+          component:() => import('../views/Logout.vue'),
+        },
+        {
+          path: 'register',
+          name:'register',
+          component:() => import ('../views/Register.vue'),
+        },
+        {
+          path:'settings',
+          name:'settings',
+          component:() =>('../views/Settings.vue'),
+        },
+        {
+          path:'calendar',
+          name:'calendar',
+          component:() =>('../views/Calendar.vue'),
+        },
+
       ]
     },
 

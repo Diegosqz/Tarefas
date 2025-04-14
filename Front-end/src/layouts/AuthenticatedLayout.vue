@@ -30,46 +30,61 @@
           </q-item-section>
         </q-item>
 
+
+<!-- Avatar do usuário com nome, cargo e botão de opções -->
+<q-item class="q-mt-sm q-mb-sm">
+  <q-item-section avatar>
+    <q-avatar size="56px">
+      <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User Avatar" />
+    </q-avatar>
+  </q-item-section>
+
+  <q-item-section>
+    <div class="text-weight-medium">João Silva</div>
+    <div class="text-caption text-grey">Administrador</div>
+
+    <!-- Botão de menu com opções -->
+    <div class="q-mt-xs">
+      <q-btn dense round flat icon="more_horiz">
+        <q-menu>
+          <q-list style="min-width: 150px">
+            <q-item clickable v-close-popup :to="'/dashboard'">
+              <q-item-section avatar><q-icon name="home"/>
+              </q-item-section>
+              <q-item-section>Dashboard</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup :to="'/tasks'">
+              <q-item-section avatar><q-icon name="checklist"/>
+              </q-item-section>
+              <q-item-section>Tarefas</q-item-section>
+            <q-item clickable v-close-popup :to="'/notifications'">
+              <q-item-section avatar><q-icon name="notifications" /></q-item-section>
+              <q-item-section>Notificações</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup :to="'/settings'">
+              <q-item-section avatar><q-icon name="settings" /></q-item-section>
+              <q-item-section>Configurações</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup :to="'/calendar'">
+              <q-item-section avatar><q-icon name="event" /></q-item-section>
+              <q-item-section>Calendário</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-close-popup :to="'/logout'">
+              <q-item-section avatar><q-icon name="logout" /></q-item-section>
+              <q-item-section>Logout</q-item-section>
+            </q-item>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
+    </div>
+  </q-item-section>
+</q-item>
+
         <q-separator />
 
-        <!-- Itens de navegação -->
-        <q-item clickable v-close-popup>
-          <q-item-section avatar>
-            <q-icon name="home" />
-          </q-item-section>
-          <q-item-section>Dashboard</q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup>
-          <q-item-section avatar>
-            <q-icon name="event" />
-          </q-item-section>
-          <q-item-section>Calendário</q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup>
-          <q-item-section avatar>
-            <q-icon name="checklist" />
-          </q-item-section>
-          <q-item-section>Tarefas</q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup>
-          <q-item-section avatar>
-            <q-icon name="settings" />
-          </q-item-section>
-          <q-item-section>Configurações</q-item-section>
-        </q-item>
-
-        <q-separator />
-
-        <q-item clickable v-close-popup>
-          <q-item-section avatar>
-            <q-icon name="logout" />
-          </q-item-section>
-          <q-item-section>Logout</q-item-section>
-        </q-item>
-      </q-list>
+</q-list>
     </q-drawer>
 
     <q-page-container>
@@ -87,4 +102,29 @@ const leftDrawerOpen = ref(true)
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+function onNotificationsClick() {
+  console.log('Notificações clicado')
+}
+
+function onSettingsClick() {
+  console.log('Configurações clicado')
+}
+
+function onLogoutClick() {
+  console.log('Logout clicado')
+}
+
+function onDashboardClick() {
+  console.log('Dashboard clicado')
+}
+
+function onCalendarClick() {
+  console.log('Calendário clicado')
+}
+
+function onTasksClick() {
+  console.log('Tarefas clicado')
+}
+
+
 </script>
