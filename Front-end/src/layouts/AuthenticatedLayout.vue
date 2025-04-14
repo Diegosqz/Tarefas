@@ -9,43 +9,50 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Title
+          Tarefas
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above behavior="default" v-model="leftDrawerOpen" side="left" bordered :breakpoint="200">
+    <!-- Sidebar à esquerda -->
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered :width="200" :breakpoint="200">
       <q-list>
         <q-item clickable v-close-popup>
-          <q-item-section>
+          <q-item-section avatar>
             <q-icon name="home" />
           </q-item-section>
-          <q-item-section>Home</q-item-section>
+          <q-item-section>Dashboard</q-item-section>
         </q-item>
 
         <q-item clickable v-close-popup>
-          <q-item-section>
-            <q-icon name="settings" />
+          <q-item-section avatar>
+            <q-icon name="event" />
           </q-item-section>
-          <q-item-section>Settings</q-item-section>
+          <q-item-section>Calendário</q-item-section>
         </q-item>
 
         <q-item clickable v-close-popup>
-          <q-item-section>
+          <q-item-section avatar>
+            <q-icon name="checklist" />
+          </q-item-section>
+          <q-item-section>Tarefas</q-item-section>
+        </q-item>
+
+        <q-item clickable v-close-popup>
+          <q-item-section avatar>
             <q-icon name="settings" />
           </q-item-section>
-          <q-item-section>Settings 2</q-item-section>
+          <q-item-section>Configurações</q-item-section>
         </q-item>
 
         <q-separator />
 
         <q-item clickable v-close-popup>
-          <q-item-section>
+          <q-item-section avatar>
             <q-icon name="logout" />
           </q-item-section>
           <q-item-section>Logout</q-item-section>
         </q-item>
-
       </q-list>
     </q-drawer>
 
@@ -64,5 +71,4 @@ const leftDrawerOpen = ref(true)
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
-
 </script>
