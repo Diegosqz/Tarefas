@@ -15,7 +15,6 @@
     <!-- Botão para reabrir o menu -->
     <q-btn icon="chevron_right" round class="position-absolute q-ma-sm" style="margin-top: 60px;" flat v-if="!leftDrawerOpen"  @click="toggleLeftDrawer">
     </q-btn>
-
     <q-drawer behavior="default" show-if-above v-model="leftDrawerOpen" side="left" bordered :width="200"
       :breakpoint="200">
       <q-list>
@@ -45,40 +44,50 @@
 
     <!-- Botão de menu com opções -->
     <div class="q-mt-xs">
-      <q-btn dense round flat icon="more_horiz">
-        <q-menu>
-          <q-list style="min-width: 150px">
-            <q-item clickable v-close-popup :to="'/dashboard'">
-              <q-item-section avatar><q-icon name="home"/>
-              </q-item-section>
-              <q-item-section>Dashboard</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup :to="'/tasks'">
-              <q-item-section avatar><q-icon name="checklist"/>
-              </q-item-section>
-              <q-item-section>Tarefas</q-item-section>
-            <q-item clickable v-close-popup :to="'/notifications'">
-              <q-item-section avatar><q-icon name="notifications" /></q-item-section>
-              <q-item-section>Notificações</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup :to="'/settings'">
-              <q-item-section avatar><q-icon name="settings" /></q-item-section>
-              <q-item-section>Configurações</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup :to="'/calendar'">
-              <q-item-section avatar><q-icon name="event" /></q-item-section>
-              <q-item-section>Calendário</q-item-section>
-            </q-item>
-            <q-separator />
-            <q-item clickable v-close-popup :to="'/logout'">
-              <q-item-section avatar><q-icon name="logout" /></q-item-section>
-              <q-item-section>Logout</q-item-section>
-            </q-item>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-    </div>
+  <q-btn dense round flat icon="more_horiz">
+    <q-menu>
+      <q-list style="min-width: 150px">
+        <q-item clickable v-close-popup :to="'/dashboard'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="home" />
+          </q-item-section>
+          <q-item-section>Dashboard</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup :to="'/tasks'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="checklist" />
+          </q-item-section>
+          <q-item-section>Tarefas</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup :to="'/notifications'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="notifications" />
+          </q-item-section>
+          <q-item-section>Notificações</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup :to="'/settings'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="settings" />
+          </q-item-section>
+          <q-item-section>Configurações</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup :to="'/calendar'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="event" />
+          </q-item-section>
+          <q-item-section>Calendário</q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item clickable v-close-popup :to="'/logout'" class="q-hoverable">
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+          <q-item-section>Logout</q-item-section>
+        </q-item>
+      </q-list>
+    </q-menu>
+  </q-btn>
+</div>
   </q-item-section>
 </q-item>
 

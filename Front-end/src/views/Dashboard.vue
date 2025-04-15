@@ -8,12 +8,11 @@
 
     <!-- Cards Tarefas -->
     <div class="row q-col-gutter-md justify-center q-mb-lg">
-      <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 flat bordered
-      cursor-inherit q-hoverable"
-      align = 'center'
-      clickable
-      v-ripple
-      @click="openTasksCompleteModal(TasksComplete)"
+      <!-- Tarefas Completas -->
+      <q-card
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 cursor-inherit q-hoverable"
+        align="center" clickable v-ripple
+        @click="openTasksCompleteModal(TasksComplete)"
       >
         <q-card-section>
           <div class="text-subtitle2">Tarefas Completas</div>
@@ -22,13 +21,13 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 flat bordered
-      cursor-inherit q-hoverable"
-      align='center'
-      v-ripple
-      @click="openTasksPendingModal(TasksPending)"
+      <!-- Tarefas Pendentes -->
+      <q-card
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 cursor-inherit q-hoverable"
+        align="center" v-ripple
+        @click="openTasksPendingModal(TasksPending)"
       >
-      <span class="q-focus-helper"></span>
+        <span class="q-focus-helper"></span>
         <q-card-section>
           <div class="text-subtitle2">Tarefas pendentes</div>
           <div class="text-h5 q-mt-sm">{{ pendingTasksCount }}</div>
@@ -36,15 +35,15 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 flat bordered
-      cursor-inherit q-hoverable"
-      align = 'center'
-      v-ripple
-      @click="openTasksOverdueModal(Tasksoverdue)"
+      <!-- Tarefas Atrasadas -->
+      <q-card
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-pa-md shadow-1 flat bordered cursor-inherit q-hoverable"
+        align="center" v-ripple
+        @click="openTasksOverdueModal(Tasksoverdue)"
       >
-      <span class ="q-focus-helper"></span>
+        <span class="q-focus-helper"></span>
         <q-card-section>
-          <div class="text-subtitle2" >Tarefas atrasadas</div>
+          <div class="text-subtitle2">Tarefas atrasadas</div>
           <div class="text-h5 q-mt-sm" :class="overdueTasksCount > 0 ? 'text-negative' : ''">
             {{ overdueTasksCount }}
           </div>
@@ -53,85 +52,91 @@
       </q-card>
     </div>
 
-    <!-- Eventos e Categorias
-     Comportamento UX esperado para eventos, categorias e tags é a abertura de um modal diferente
-     quando voce clica em 'eventos' e quando voce no evento em especifico. Dá mesma forma
-     'categorias' e na categoria em especifica. Ainda nao totalmente implementado-->
+    <!-- Eventos e Categorias -->
     <div class="row q-col-gutter-md q-mb-lg justify-center">
-      <q-card class="col-xs-12 col-sm-12 col-md-6 col-lg-4 shadow-1 flat bordered
-      cursor-inherit q-hoverable"
-      align='center'
-      v-ripple
-      @click="openEventsModal(Events)">
-      <span class="q-focus-helper"></span>
-
-        <q-card-section>
-          <div class="text-subtitle1" >Eventos</div>
-          <div class="q-mt-sm">
-            <q-item
-            v-for="task in upcomingTasks"
-            :key="task.id"
-            clickable
-            v-ripple
-            @click="openEventsModal(Events)"
-            class="row items-center q-mb-sm cursor-inherit">
-            <q-item-section>
-              <q-icon name="circle" :color="getStatusColor(task.status)" size="12px" class="q-mr-sm" />
-              <div class="col">{{ task.titulo }}</div>
-              <div class="text-caption text-grey">
-                {{ formatDate(task.data) }}
-              </div>
-            </q-item-section>
+      <!-- Card Eventos -->
+      <q-card
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-4 shadow-1 cursor-inherit"
+        align="center"
+        @click="openEventsModal()"
+      >
+        <!-- Esse card, ao ser clicado, abre a visão geral dos eventos -->
+        <q-card-section class="q-pl-none q-pt-none">
+          <q-list>
+            <q-item clickable v-ripple class="rounded-borders">
+              <q-item-section class="text-center text-subtitle1">
+                <q-item-label>Eventos</q-item-label>
+              </q-item-section>
             </q-item>
-          </div>
+            <q-item
+              v-for="task in upcomingTasks"
+              :key="task.id"
+              clickable
+              v-ripple
+              class="rounded-borders cursor-inherit q-ml-none"
+              @click.stop="openSpecificEvent(task)"
+            >
+              <q-item-section class="text-center">
+                <q-item-label>
+                  <q-icon name="circle" :color="getStatusColor(task.status)" size="12px" />
+                </q-item-label>
+                <div>{{ task.titulo }}</div>
+                <div class="text-caption text-grey">{{ formatDate(task.data) }}</div>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
-    <q-card class="col-xs-12 col-sm-12 col-md-6 col-lg-4 shadow-1 flat bordered cursor-inherit q-hoverable"
-    align = center
-    v-ripple
-      @click="openCategoryModal(category)"
-    >
-    <span class="q-focus-helper"></span>
-  <q-card-section>
-    <div class="text-subtitle1">Categorias</div>
-    <div class="q-mt-md" >
-      <q-item
-        v-for="category in taskCategories"
-        :key="category.name"
-        clickable
-        v-ripple
-        @click="openCategoryModal(category)"
-        class="q-mb-sm q-pa-sm cursor-inherit"
+
+      <!-- Card Categorias -->
+      <q-card
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-4 shadow-1 cursor-inherit"
+        align="center"
       >
-       <q-item-section class="full-width">
-          <div class="row justify-between items-center">
-            <div>{{ category.name }}</div>
-            <div>{{ category.count }}</div>
-          </div>
-          <q-linear-progress
-            :value="category.count / tasks.length"
-            color="blue-3"
-            rounded
-            class="q-mt-sm"
-            />
-        </q-item-section>
-      </q-item>
-    </div>
-  </q-card-section>
-</q-card>
+        <q-card-section class="q-pl-none q-pt-none">
+          <q-list>
+            <q-item clickable v-ripple class="rounded-borders">
+              <q-item-section class="text-center text-subtitle1">
+                <q-item-label>Categorias</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              v-for="category in taskCategories"
+              :key="category.name"
+              clickable
+              v-ripple
+              @click.stop="openCategoryModal(category)"
+              class="q-mb-sm q-pa-sm cursor-inherit"
+            >
+              <q-item-section class="full-width">
+                <div class="row justify-between items-center">
+                  <div>{{ category.name }}</div>
+                  <div>{{ category.count }}</div>
+                </div>
+                <q-linear-progress
+                  :value="category.count / tasks.length"
+                  color="blue-3"
+                  rounded
+                  class="q-mt-sm"
+                />
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+      </q-card>
     </div>
 
     <!-- Tags -->
     <div class="row justify-center">
-  <q-card class="col-xs-12 col-sm-10 col-md-8 col-lg-6 shadow-1 flat bordered
-  cursor-inherit q-hoverable"
-  align = 'center'
-  v-ripple
-  @click="openTagsModal(Tags)">
-  <span class="q-focus-helper"></span>
-    <q-card-section>
-      <div class="text-subtitle1" align = 'center'>Tags</div>
-      <div class="q-mt-md">
+  <q-card
+    class="col-xs-12 col-sm-10 col-md-8 col-lg-6 shadow-1 cursor-inherit q-hoverable"
+    align="center"
+    v-ripple
+    @click="openTagsModal(Tags)"
+  >
+    <q-card-section class="text-center">
+      <span class="text-subtitle1">Tags</span>
+      <div class="q-mt-md row justify-center">
         <q-chip
           v-for="tag in taskTags"
           :key="tag"
@@ -142,8 +147,7 @@
           :label="tag"
           clickable
           v-ripple
-          @click="openTagModal(tag)"
-
+          @click.stop="openTagModal(tag)"
         />
       </div>
     </q-card-section>
@@ -158,14 +162,22 @@ import { useQuasar } from 'quasar'
 import { ref, computed } from 'vue'
 
 const { dialog } = useQuasar()
-
+const isHovered = ref(false)
 const leftDrawerOpen = ref(true)
 const abrirModal = ref(false)
+/*const isHoveringItem = ref(false)
+function onItemMouseEnter() {
+isHoveringItem.value = true
+}
+
+function onItemMouseLeave() {
+  isHoveringItem.value = false
+}*/
 
 // User data
 const usuario = ref<ICreateUser>({
   name: 'Diego',
-  email: 'diego@example.com',
+  email: 'diegobrabo@example.com',
   avatar: 'https://cdn.quasar.dev/img/avatar.png',
   password: ''
 })
