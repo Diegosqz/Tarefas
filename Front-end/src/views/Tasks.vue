@@ -9,22 +9,18 @@
         @click="toggleFilters"
       />
 
-      <!-- Botão que abre o modal -->
-         <color
+      <!-- Botão  Adicionar Tarefa, que abre o modal -->
+            <q-btn
             color ="primary"
             icon="add"
             label="Adicionar Tarefa"
             no-caps
-            @click="showDialogNewTask = true"></color>
+            @click="showDialog('new')"
+            class =  "cursor-inherit"
+            />
             <!-- criar funçao de acordo com o exemplo que esta no dashboard -->
 
-            />
-
-            <!-- Componente do Dialog
-              <DialogNewTask
-              :model-value="showDialogNewTask"
-              @submit="handleTaskSubmit"
-              /> https://quasar.dev/quasar-plugins/dialog#writing-the-custom-component-->
+             <!-- https://quasar.dev/quasar-plugins/dialog#writing-the-custom-component-->
 
 
     </div>
@@ -83,8 +79,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DialogNewTask from '../components/tasks/DialogNewTask.vue'
+import {useQuasar} from 'quasar'
 
-// const {dialog} = useQuasar()
 
 const filtersVisible = ref(false)
 const search = ref('')
@@ -92,8 +88,15 @@ const selectedCategory = ref(null)
 const selectedPriority = ref(null)
 const selectedStatus = ref(null)
 const showDialogNewTask = ref(false)
-
-
+const $q = useQuasar()
+const showDialog = (taskStatus:string) => {
+  $q.dialog ({
+    component: DialogNewTask,
+    componentProps:{
+      modelValue:true
+    }
+  })
+}
 const categories = ['All categories', 'Personal', 'Work', 'Learning']
 const priorities = ['All priorities', 'High', 'Medium', 'Low']
 const statuses = ['All tasks', 'Pending', 'Completed']

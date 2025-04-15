@@ -1,21 +1,21 @@
 <template>
-  <q-dialog v-model="modelValue" persistent>
+  <q-dialog v-model="internalModelValue" persistent>
     <q-card style="min-width: 500px; max-width: 90vw;">
       <q-card-section>
-        <div class="text-h6">Add New Task</div>
+        <div class="text-h6">Adicionar nova tarefa</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
         <q-input
           filled
           v-model="form.title"
-          label="Task Title"
+          label="Título da tarefa"
           class="q-mb-md"
         />
         <q-input
           filled
           v-model="form.description"
-          label="Description"
+          label="Descrição"
           type="textarea"
           autogrow
           class="q-mb-md"
@@ -27,14 +27,14 @@
             filled
             v-model="form.category"
             :options="categories"
-            label="Category"
+            label="Categoria"
           />
           <q-select
             class="col-12 col-sm-6"
             filled
             v-model="form.priority"
             :options="priorities"
-            label="Priority"
+            label="Prioridade"
           />
         </div>
 
@@ -46,7 +46,7 @@
           class="q-mb-md"
         >
           <template #append>
-            <q-icon name="event" class="cursor-pointer">
+            <q-icon name="event" class="cursor-inherit">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="form.dueDate" />
               </q-popup-proxy>
@@ -71,22 +71,36 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Cancel" v-close-popup />
-        <q-btn color="primary" label="Create Task" @click="submitTask" />
+        <q-btn flat label="Cancel" @click="closeDialog" />
+        <q-btn color="primary" label="Criar Tarefa" @click="submitTask" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, reactive, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 
+// Props & Emits
 const props = defineProps<{
-  modelValue: boolean;
+  modelValue: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue', 'submit'])
 
+// Local state control (ref espelho do v-model)
+const internalModelValue = ref(props.modelValue)
+
+watch(() => props.modelValue, (val) => {
+  internalModelValue.value = val
+})
+
+watch(internalModelValue, (val) => {
+  emit('update:modelValue', val)
+  if (!val) resetForm()
+})
+
+// Form data
 const form = reactive({
   title: '',
   description: '',
@@ -111,8 +125,7 @@ function toggleTag(tag: string) {
 
 function submitTask() {
   emit('submit', { ...form })
-  emit('update:modelValue', false)
-  resetForm()
+  internalModelValue.value = false
 }
 
 function resetForm() {
@@ -124,8 +137,7 @@ function resetForm() {
   form.tags = []
 }
 
-// Fecha o modal se modelValue mudar
-watch(() => props.modelValue, (val) => {
-  if (!val) resetForm()
-})
+function closeDialog() {
+  internalModelValue.value = false
+}
 </script>
