@@ -50,17 +50,17 @@ const router = createRouter({
         {
           path:'settings',
           name:'settings',
-          component:() =>('../views/Settings.vue'),
+          component:() => import ('../views/Settings.vue'),
         },
         {
           path:'calendar',
           name:'calendar',
-          component:() =>('../views/Calendar.vue'),
+          component:() => import ('../views/Calendar.vue'),
         },
         {
           path:'dialognewtask',
           name: 'dialognewtask',
-          component:() => ('../components/tasks/DialogNewTask.vue'),
+          component:() => import ('../components/tasks/DialogNewTask.vue'),
         },
 
       ]

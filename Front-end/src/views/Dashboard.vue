@@ -63,7 +63,7 @@
         <!-- Esse card, ao ser clicado, abre a visão geral dos eventos -->
         <q-card-section class="q-pl-none q-pt-none">
           <q-list>
-            <q-item clickable v-ripple class="rounded-borders">
+            <q-item clickable v-ripple class="rounded-borders cursor-inherit">
               <q-item-section class="text-center text-subtitle1">
                 <q-item-label>Eventos</q-item-label>
               </q-item-section>
@@ -95,7 +95,7 @@
       >
         <q-card-section class="q-pl-none q-pt-none">
           <q-list>
-            <q-item clickable v-ripple class="rounded-borders">
+            <q-item clickable v-ripple class="rounded-borders cursor-inherit">
               <q-item-section class="text-center text-subtitle1">
                 <q-item-label>Categorias</q-item-label>
               </q-item-section>
@@ -126,33 +126,47 @@
       </q-card>
     </div>
 
-    <!-- Tags -->
-    <div class="row justify-center">
+   <!-- Tags -->
+<div class="row justify-center">
   <q-card
-    class="col-xs-12 col-sm-10 col-md-8 col-lg-6 shadow-1 cursor-inherit q-hoverable"
+    class="col-xs-12 col-sm-10 col-md-8 col-lg-6 shadow-1 cursor-inherit"
     align="center"
-    v-ripple
-    @click="openTagsModal(Tags)"
   >
-    <q-card-section class="text-center">
-      <span class="text-subtitle1">Tags</span>
-      <div class="q-mt-md row justify-center">
-        <q-chip
-          v-for="tag in taskTags"
-          :key="tag"
-          class="q-mr-sm q-mb-sm"
-          :color="getTagColor(tag)"
-          text-color="white"
-          outline
-          :label="tag"
-          clickable
-          v-ripple
-          @click.stop="openTagModal(tag)"
-        />
-      </div>
+    <q-card-section class="q-pl-none q-pt-none">
+      <q-list>
+        <!-- Título -->
+        <q-item clickable v-ripple class="rounded-borders cursor-inherit" @click="openTagsModal()">
+          <q-item-section class="text-center text-subtitle1">
+            <q-item-label>Tags</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Chips das tags -->
+        <q-item class="q-mt-md ">
+          <q-item-section>
+            <div class="row justify-center">
+              <q-chip
+                v-for="tag in taskTags"
+                :key="tag"
+                class="q-mr-sm q-mb-sm cursor-inherit "
+                :color="getTagColor(tag)"
+                text-color="white"
+                outline
+                :label="tag"
+                clickable
+                v-ripple
+                @click.stop="openTagModal(tag)"
+              />
+            </div>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </q-card-section>
   </q-card>
 </div>
+
+
+
 
   </q-page>
 </template>
@@ -165,14 +179,7 @@ const { dialog } = useQuasar()
 const isHovered = ref(false)
 const leftDrawerOpen = ref(true)
 const abrirModal = ref(false)
-/*const isHoveringItem = ref(false)
-function onItemMouseEnter() {
-isHoveringItem.value = true
-}
 
-function onItemMouseLeave() {
-  isHoveringItem.value = false
-}*/
 
 // User data
 const usuario = ref<ICreateUser>({

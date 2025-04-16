@@ -4,7 +4,7 @@
 
 <template>
   <q-page>
-teste
+Olá! Mundo.
   </q-page>
 </template>
 
