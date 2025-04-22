@@ -43,32 +43,65 @@
       </q-tab-panel>
       <!-- Tarefas -->
       <q-tab-panel name="tarefas">
-        <q-card class="q-pa-md">
+  <q-card class="q-pa-md">
+    <q-card-section>
+      <structDefaultPage
+        Descricao="Criação, definição e exclusão de Tarefas"
+        Titulo="Tarefas"
+        Placeholder="Adicionar nova tarefa"
+        :error="taskInputError"
+        errorMessage="O nome da tarefa não pode estar vazio"
+        :resetOnAdd="true"
+        @add="addTask"
+      >
+        <template v-slot:lista>
           <q-card-section>
-            <structDefaultPage Descricao="Criação, definição e exclusão de Tarefas" Titulo="Tarefas"
-              Placeholder="Adicionar nova tarefa" @add="addTask">
-              <template v-slot:lista>
-
-              </template>
-            </structDefaultPage>
+            <div v-if="tasks.length === 0" class="text-grey text-center q-mb-md">
+              Nenhuma tarefa cadastrada ainda. 📝
+            </div>
+            <q-list bordered v-else>
+              <q-item v-for="t in tasks" :key="t.id" clickable>
+                <q-item-section>
+                  {{ t.name }}
+                </q-item-section>
+                <q-item-section side>
+                  <q-btn
+                    icon="edit"
+                    flat
+                    round
+                    @click.stop="editTask(t)"
+                    :aria-label="'Editar tarefa ' + t.name"
+                  />
+                  <q-btn
+                    icon="delete"
+                    flat
+                    round
+                    color="negative"
+                    @click.stop="deleteTask(t)"
+                    :aria-label="'Excluir tarefa ' + t.name"
+                  />
+                </q-item-section>
+              </q-item>
+            </q-list>
           </q-card-section>
-          <q-separator class="q-my-md" />
-          <!-- Formulário de adição de Tarefa -->
+        </template>
+      </structDefaultPage>
+    </q-card-section>
+    <q-separator class="q-my-md" />
+  </q-card>
+</q-tab-panel>
+</q-tab-panels>
 
 
-        </q-card>
-      </q-tab-panel>
-    </q-tab-panels>
-  </q-page>
+
+
+</q-page>
 </template>
 
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
 import { useQuasar } from 'quasar'
 import structDefaultPage from '../components/settings/structDefaultPage.vue';
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-import { useAuthStore } from '@/stores/auth'
 interface Item { id: number; name: string; color: string }
 interface Category {
   id: number;
@@ -103,24 +136,82 @@ function addCategory(category: string) {
   })
 }
 function editCategory(cat: Item) { /* ... */ }
-function deleteCategory(cat: Item) {
-  categories.value = categories.value.filter(c => c.id !== cat.id)
+function deleteCategory(categories: Item) {
+  categories.value = categories.value.filter(c => c.id !== cat.id) //Quando for implementar realmente, trocar parametro cat para categories\\
 }
 //===============================================================================================\\
 //Tarefas//
 const tasks = ref<Item[]>([])
+const taskInputError = ref(false)
+function addTask(taskName: string) {
+  const name = taskName.trim()
+  taskInputError.value = false
+  if (!name) return
 
-function addTask(task: string) {
+  const alreadyExists = tasks.value.some(t => t.name.toLowerCase() === name.toLowerCase())
+  if (alreadyExists) {
+    taskInputError.value = true
+    dialog.notify({
+      message: 'Essa tarefa já existe!',
+      type: 'warning',
+      position: 'top'
+    })
+    return
+  }
   tasks.value.push({
     id: Date.now(),
-    name: task.trim()
+    name
   })
+
+  dialog.notify({
+    message: 'Tarefa adicionada com sucesso!',
+    type: 'positive',
+    position: 'top'
+  })
+    newTaskInput.value = ''
+
 }
 
-function editTask(t: Item) { /* ... */ }
-function deleteTask(t: Item) {
-  tasks.value = tasks.value.filter(x => x.id !== t.id)
-}
+function editTask(t: Item) {
+  dialog({
+  title: 'Editar Tarefa',
+  message: 'Atualize o nome da tarefa:',
+  prompt: {
+    model: task.name,
+    type: 'text'
+  },
+  cancel: true,
+  persistent: true
+}).onOk((newName: string) => {
+  const name = newName.trim()
+  if (!name) return
+  const t = tasks.value.find(t => t.id === task.id)
+  if (t) t.name = name
+})
+
+  }
+
+  function deleteTask(task: Item) {
+  dialog({
+    title: 'Excluir Tarefa',
+    message: 'Tem certeza que deseja excluir a tarefa "${task.name}"?',
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: 'Sim',
+      color: 'negative'
+    },
+    cancelLabel: 'Cancelar',
+    type: 'confirm'
+  }).onOk(() => {
+    tasks.value = tasks.value.filter(t => t.id !== task.id)
+    dialog.notify({
+      message: 'Tarefa excluída com sucesso!',
+      type: 'positive',
+      position: 'top'
+  })})}
+// Quando for implementar realmente, trocar parametro t para tasks\\
+
 //===============================================================================================\\
 // --- Tags ---
 

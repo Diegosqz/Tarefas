@@ -6,22 +6,21 @@
               {{Descricao}}
             </div>
           </q-card-section>
-
           <q-separator class="q-my-md" />
-          <!--===============================================================================================-->
-          <!-- Formulário de Adição de Categoria -->
-          <!--===============================================================================================-->
           <q-card-section>
             <q-input
               v-model="value"
               :placeholder='Placeholder'
               outlined
+              :error="props.error"
+              :error-message="props.errorMessage"
             >
               <template v-slot:after>
-                <q-btn icon="add" color="primary" @click="$emit('add', value)" flat />
+                <q-btn icon="add" color="primary" @click="handleAdd" flat/>
+                <!--"$emit('add', value)" flat />-->
               </template>
-            </q-input>
 
+            </q-input>
           </q-card-section>
 
           <q-separator class="q-my-md" />
@@ -41,6 +40,9 @@ import {ref} from 'vue';
   Titulo: string;
   Descricao:string;
   Placeholder:string;
+  error?: boolean
+  errorMessage?: string
+  resetOnAdd?: boolean
  }>()
 
  defineEmits<{
@@ -48,6 +50,14 @@ import {ref} from 'vue';
  }>()
 
  const value = ref<string>('');
+  function handleAdd() {
+  if (value.value.trim()) {
+    emit('add', value.value.trim())
+    if (props.resetOnAdd) {
+      value.value = ''
+    }
+    }
+    }
 </script>
 
 
