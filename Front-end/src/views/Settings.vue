@@ -90,6 +90,115 @@
     <q-separator class="q-my-md" />
   </q-card>
 </q-tab-panel>
+<!-- Aba Tags -->
+<q-tab-panel name="tags">
+  <q-card class="q-pa-md">
+    <q-card-section>
+      <structDefaultPage Descricao="Criação, definição e exclusão de Tags" Titulo="Tags"
+      Placeholder="Adicionar nova tags"
+      @add="addTags">
+      <!-- Slot do formulário de adição -->
+      <template v-slot:form>
+          <q-card-section class="row items-center q-col-gutter-md">
+            <q-input
+              v-model="newTag"
+              placeholder="Enter new tag"
+              outlined
+              class="col"
+            />
+            <q-btn
+              icon="add"
+              color="primary"
+              @click="addTag"
+              :disable="!newTag"
+              flat
+            />
+          </q-card-section>
+        </template>
+
+        <!-- Slot da lista de tags -->
+        <template v-slot:lista>
+          <q-card-section>
+            <q-list bordered>
+              <q-item
+                v-for="tag in tags"
+                :key="tag.id"
+                clickable
+              >
+                <q-item-section>
+                  {{ tag.name }}
+                </q-item-section>
+                <q-item-section side>
+                  <q-btn
+                    icon="edit"
+                    flat
+                    round
+                    @click.stop="editTag(tag)"
+                  />
+                  <q-btn
+                    icon="delete"
+                    flat
+                    round
+                    color="negative"
+                    @click.stop="removeTag(tag)"
+                  />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </template>
+      </structDefaultPage>
+    </q-card-section>
+    <q-separator spaced />
+  </q-card>
+</q-tab-panel>
+
+<!-- Aba Conta -->
+<q-tab-panel name="account">
+  <q-card flat bordered class="q-pa-md">
+    <q-card-section>
+      <structDefaultPage
+        Titulo="Configurando sua Conta"
+        Descricao="Definindo e modificando seus detalhes"
+      >
+        <!-- Slot de conteúdo da conta -->
+        <template v-slot:default>
+          <q-card-section class="text-center">
+            <div class="text-h6">Configurando sua Conta</div>
+            <div class="text-caption text-grey">
+              Definindo e modificando seus detalhes
+            </div>
+          </q-card-section>
+        </template>
+      </structDefaultPage>
+    </q-card-section>
+    <q-separator spaced />
+  </q-card>
+</q-tab-panel>
+
+<!-- Aba Outros-->
+<q-tab-panel name="others">
+  <q-card flat bordered class="q-pa-md">
+    <q-card-section>
+      <structDefaultPage
+        Titulo="Outros"
+        Descricao="Configurações adicionais"
+      >
+        <!-- Slot de conteúdo de outros -->
+        <template v-slot:default>
+          <q-card-section class="text-center">
+            <div class="text-h6">Outros</div>
+            <div class="text-caption text-grey">
+              Configurações adicionais
+            </div>
+          </q-card-section>
+        </template>
+      </structDefaultPage>
+    </q-card-section>
+    <q-separator spaced />
+  </q-card>
+</q-tab-panel>
+
 </q-tab-panels>
 
 
